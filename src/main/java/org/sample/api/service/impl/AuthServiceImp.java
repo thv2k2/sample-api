@@ -1,10 +1,12 @@
 package org.sample.api.service.impl;
 
 import java.sql.Timestamp;
-import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import org.sample.api.dto.AuthDto;
@@ -21,6 +23,9 @@ import org.sample.common.numberic.RoleUser;
 public class AuthServiceImp implements AuthService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
+
+  @Autowired
+  private PasswordEncoder passwordEncoder;
 
   @Override
   public User getUser(Long userId) {
@@ -41,15 +46,20 @@ public class AuthServiceImp implements AuthService {
     newUser.setUpdatedAt(currentDate);
     newUser.setIsDeleted(false);
     newUser.setRole(RoleUser.USER);
+    newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
     return userMapper.fromUserEntityToUserDto(userRepository.save(newUser));
   }
 
   @Override
   public AuthDto.LoginResponse login(AuthDto.LoginRequest request) {
-    User user = userRepository.findUserByUsername(request.getUsername()).orElse(null);
+    User user =
+        userRepository
+            .findUserByUsername(request.getUsername())
+            .orElseThrow(() -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_NOT_FOUND));
 
-    if (Objects.isNull(user) || !user.getPassword().equals(request.getPassword())) {
+//    String hashPassword = new BCryptPasswordEncoder().encode(request.getPassword());
+    if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
       throw new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_NOT_FOUND);
     }
 
