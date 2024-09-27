@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import org.sample.common.numberic.RoleUser;
 
+import java.awt.*;
+
 public class AuthDto {
 
   @Getter
@@ -15,6 +17,7 @@ public class AuthDto {
     private String username;
     private String password;
     private String fullname;
+    private String email;
   }
 
   @Getter
