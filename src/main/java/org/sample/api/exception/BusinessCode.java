@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum BusinessCode implements ErrorCode {
   //    ACCOUNT_NOT_FOUND("404_ACCOUNT_NOT_FOUND", "Account not found"),
-  USERNAME_OR_PASSWORD_NOT_FOUND(
-      "400_USERNAME_OR_PASSWORD_NOT_FOUND", "username or password not found"),
+  USERNAME_OR_PASSWORD_IS_INCORRECT(
+      "400_USERNAME_OR_PASSWORD_IS_INCORRECT", "username or password not found"),
   ;
 
   private final String code;

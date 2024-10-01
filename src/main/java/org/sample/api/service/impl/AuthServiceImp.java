@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,11 +55,11 @@ public class AuthServiceImp implements AuthService {
     User user =
         userRepository
             .findUserByUsername(request.getUsername())
-            .orElseThrow(() -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_NOT_FOUND));
+            .orElseThrow(() -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT));
 
 //    String hashPassword = new BCryptPasswordEncoder().encode(request.getPassword());
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-      throw new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_NOT_FOUND);
+      throw new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT);
     }
 
     return AuthDto.LoginResponse.builder()
