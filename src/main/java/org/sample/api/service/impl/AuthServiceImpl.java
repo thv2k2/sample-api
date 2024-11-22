@@ -17,14 +17,15 @@ import org.sample.api.service.AuthService;
 import org.sample.common.entity.User;
 import org.sample.common.numberic.RoleUser;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImp implements AuthService {
+public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
 
   @Autowired
-  private PasswordEncoder passwordEncoder;
+  private final BCryptPasswordEncoder passwordEncoder;
 
   @Override
   public User getUser(Long userId) {
@@ -32,8 +33,13 @@ public class AuthServiceImp implements AuthService {
   }
 
   @Override
+  @Transactional
   public AuthDto.UserDto createNewUser(AuthDto.CreateUserRequest request) {
-    User user = userRepository.findUserByUsername(request.getUsername()).orElse(null);
+    User user =
+            userRepository
+                    .findUserByUsername(request.getUsername())
+                    .orElseThrow(
+                            () -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT));
 
     if (user != null) {
       return userMapper.fromUserEntityToUserDto(user);
@@ -45,7 +51,6 @@ public class AuthServiceImp implements AuthService {
     newUser.setUpdatedAt(currentDate);
     newUser.setIsDeleted(false);
     newUser.setRole(RoleUser.USER);
-    newUser.setPassword(passwordEncoder.encode(request.getPassword()));
 
     return userMapper.fromUserEntityToUserDto(userRepository.save(newUser));
   }
@@ -55,9 +60,9 @@ public class AuthServiceImp implements AuthService {
     User user =
         userRepository
             .findUserByUsername(request.getUsername())
-            .orElseThrow(() -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT));
+                .orElseThrow(
+                        () -> new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT));
 
-//    String hashPassword = new BCryptPasswordEncoder().encode(request.getPassword());
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
       throw new BusinessException(BusinessCode.USERNAME_OR_PASSWORD_IS_INCORRECT);
     }
