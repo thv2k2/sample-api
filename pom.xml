@@ -31,7 +31,9 @@
         <version.mapstruct>1.5.3.Final</version.mapstruct>
         <version.lombok-mapstruct-binding>0.2.0</version.lombok-mapstruct-binding>
         <version.google-gson>2.10.1</version.google-gson>
-        <version.security>3.3.3</version.security>
+        <version.security>3.4.0</version.security>
+        <version.jsonwebtoken>0.12.6</version.jsonwebtoken>
+        <version.okhttp3>4.12.0</version.okhttp3>
     </properties>
     <dependencies>
         <dependency>
@@ -105,6 +107,20 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>${version.google-gson}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>${version.jsonwebtoken}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>${version.okhttp3}</version>
         </dependency>
     </dependencies>
 

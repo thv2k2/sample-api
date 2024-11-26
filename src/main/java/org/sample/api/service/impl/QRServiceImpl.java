@@ -1,19 +1,19 @@
 package org.sample.api.service.impl;
 
-import java.io.ByteArrayOutputStream;
-import java.util.Optional;
-
-import lombok.RequiredArgsConstructor;
-
-import org.springframework.stereotype.Service;
-
+import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
-
+import lombok.RequiredArgsConstructor;
 import org.sample.api.common.SampleCommon;
 import org.sample.api.service.QRService;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayOutputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

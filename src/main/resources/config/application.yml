@@ -26,6 +26,10 @@ spring:
   jackson:
     default-property-inclusion: always
 
+jwt:
+  secret-key: yourSecureSecretKey
+  expiration-time: 86400000
+
 # logger
 logging:
   level:
