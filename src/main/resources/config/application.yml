@@ -40,3 +40,7 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+scheduler:
+  job:
+    enabled: true
