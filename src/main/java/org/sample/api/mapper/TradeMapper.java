@@ -12,11 +12,11 @@ import java.time.ZoneId;
 @Mapper(componentModel = "spring")
 public interface TradeMapper {
 
-    @Mapping(target = "time", source = "time", qualifiedByName = "mapTime")
-    BinanceDto.TradeResponseDto fromTradeDtoToTradeResponseDto(BinanceDto.TradeDto trade);
+  @Mapping(target = "time", source = "time", qualifiedByName = "mapTime")
+  BinanceDto.TradeResponseDto fromTradeDtoToTradeResponseDto(BinanceDto.TradeDto trade);
 
-    @Named("mapTime")
-    default LocalDateTime mapTime(long time) {
-        return Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime();
-    }
+  @Named("mapTime")
+  default LocalDateTime mapTime(long time) {
+    return Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime();
+  }
 }

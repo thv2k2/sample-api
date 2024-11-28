@@ -11,53 +11,54 @@ import java.util.List;
 
 public class BinanceDto {
 
-    @Builder
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class TradeDto {
-        private Long id;
-        private String price;
-        private String qty;
-        private String quoteQty;
-        private Long time;
-        private Boolean isBuyerMaker;
-        private Boolean isBestMatch;
-    }
+  @Builder
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class TradeDto {
+    private Long id;
+    private String price;
+    private String qty;
+    private String quoteQty;
+    private Long time;
+    private Boolean isBuyerMaker;
+    private Boolean isBestMatch;
+  }
 
-    @Builder
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class TradeResponseDto {
-        private Long id;
-        private String price;
-        private LocalDateTime time;
-    }
+  @Builder
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class TradeResponseDto {
+    private Long id;
+    private String price;
+    private LocalDateTime time;
+  }
 
-    @Builder
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class GetTradesResponse {
-        private String coinName;
-        private List<TradeResponseDto> trades;
-    }
+  @Builder
+  @Getter
+  @Setter
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class GetTradesResponse {
+    private String coinName;
+    private List<TradeResponseDto> trades;
+    private String trend;
+  }
 
-    @Getter
-    @Setter
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class GetTradesRequest {
-        private List<String> symbolList;
-        private String symbol;
-        private Integer limit;
-        private TradeDataStatus status;
-    }
+  @Getter
+  @Setter
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class GetTradesRequest {
+    private List<String> symbolList;
+    private String symbol;
+    private Integer limit;
+    private TradeDataStatus status;
+  }
 
     @AllArgsConstructor
     @NoArgsConstructor
@@ -71,7 +72,21 @@ public class BinanceDto {
         INTERVAL_8HOUR("INTERVAL_8HOUR", 480),
         INTERVAL_12HOUR("INTERVAL_12HOUR", 720);
 
-        private String key;
-        private Integer value;
+    private String key;
+    private Integer value;
+  }
+
+  @AllArgsConstructor
+  @NoArgsConstructor
+  @Getter
+  public enum TrendType {
+    UP("UP"),
+    DOWN("DOWN");
+
+    private String value;
+
+    public static TrendType getTrendByCoinPrice(Double previousPrice, Double currentPrice) {
+      return previousPrice < currentPrice ? TrendType.UP : TrendType.DOWN;
     }
+  }
 }

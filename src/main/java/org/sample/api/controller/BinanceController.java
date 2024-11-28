@@ -20,13 +20,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class BinanceController {
-    private final BinanceService binanceService;
+  private final BinanceService binanceService;
 
-    @PostMapping("/trades")
-    public ResponseEntity<List<BinanceDto.GetTradesResponse>> getTrades(
-            @RequestBody BinanceDto.GetTradesRequest request) {
-        return ResponseEntity.ok()
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(binanceService.getTrades(request));
-    }
+  @PostMapping("/trades")
+  public ResponseEntity<List<BinanceDto.GetTradesResponse>> getTrades(
+          @RequestBody BinanceDto.GetTradesRequest request) {
+    return ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_JSON)
+            .body(binanceService.getTrades(request));
+  }
 }

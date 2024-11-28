@@ -43,4 +43,4 @@ logging:
 
 scheduler:
   job:
-    enabled: true
+    enabled: false
